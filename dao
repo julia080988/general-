@@ -1,0 +1,25 @@
+// Load Websheet with a session token
+function loadWebsheet() {
+    require([
+        "tm1web/websheet/Workbook",
+        "dojo/_base/unload",
+    ], function(Workbook, unload){
+        loadedWebsheet = new Workbook({
+            sessionToken: "yourSessionToken",
+            path: "Applications/Planning Sample/Management Reporting/Actual v Budget",
+            title: "Active v Budget",
+            onLoad: function() {
+                console.debug("Workbook loaded successfully.");
+            },
+        });
+
+        // Assign object to a UI container
+        dijit.byId("tabContainer").addChild(loadedWebsheet);
+
+        loadedWebsheet.startup();
+
+        unload.addOnUnload(function() {
+            loadedWebsheet.destroy();
+        });
+    });
+};
